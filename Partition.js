@@ -16,7 +16,11 @@ class Partition {
    * @return {String}
    */
   messageCreator(message) {
-    return JSON.stringify(message)
+
+    return JSON.stringify({
+      ...message,
+      timestamp: message.timestamp || + new Date()
+    })
   }
 
   push(message, options) {
@@ -59,45 +63,64 @@ class Partition {
 
       const subscribers = this.subscribers
       const length = subscribers.length
-      const { payload } = message
 
-      let current = 0
-      const next = () => {
-        if (current > length-2) {
-          const handle = subscribers[current++].handle
-          if (typeof handle === 'function') {
-            handle(payload, () => {
-              this.run()
-            })
-          } else {
-            console.log('handle err: ' + handle)
-          }
-        } else {
-          const handle = subscribers[current++].handle
-          if (typeof handle === 'function') {
-            handle(payload, next)
-          } else {
-            console.log('handle err: ' + handle)
-          }
+      // Handle concurrency
+      let unfinish = 0
+      const finish = (feedback) => {
+        // handle feedback
+        unfinish--
+        if (unfinish <= 0) {
+          setTimeout(() => {
+            this.run()
+          })
         }
       }
 
-      const reject = () => {
-        console.log('reject message: ', message)
+      const consumerFilted = []
+      subscribers.forEach(subscribe => {
+        const { messageType } = subscribe
+        if (!messageType || messageType === message.type) {
+          unfinish++
+          consumerFilted.push(subscribe)
+        }
+      })
+
+      if (consumerFilted.length === 0) {
+        // Message not match any consumer
+        // remove !!!
+        console.log('message not match any consumer')
+        finish()
       }
 
-      next()
+      consumerFilted.forEach(consumer => {
+        consumer.handle(message, finish)
+      })
 
-      // handle
-      // this.subscribers.forEach(sub => {
-      //   sub.handle(message, (msgfb) => {
-      //     // finished callback
-      //     if (msgfb) console.log('msgfb=' + feedback)
-      //     setTimeout(() => {
-      //       this.run()
-      //     })
-      //   })
-      // })
+
+      // Handle Step by step
+      // let current = 0
+      // const finish = () => {
+      //   if (current > length-2) {
+      //     const handle = subscribers[current++].handle
+      //
+      //     if (typeof handle === 'function') {
+      //       handle(message, () => {
+      //         this.run()
+      //       })
+      //     } else {
+      //       console.log('handle must be a function')
+      //     }
+      //   } else {
+      //     const handle = subscribers[current++].handle
+      //     if (typeof handle === 'function') {
+      //       handle(message, finish)
+      //     } else {
+      //       console.log('handle must be a function')
+      //     }
+      //   }
+      // }
+      //
+      // finish()
     })
   }
 

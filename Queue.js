@@ -48,7 +48,7 @@ class Queue {
     })
 
     client.on('error', (err) => {
-      console.log("connect redis server error: " + err)
+      console.log(err)
     })
 
     return client

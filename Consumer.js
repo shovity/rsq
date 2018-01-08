@@ -1,8 +1,14 @@
+/**
+ * Consumer subscribe to topic for get message
+ */
+
 class Consumer {
   constructor() {
-    this.handle = () => {
+    this.handle = (message, finish) => {
       console.log('consumer not regist onMessage')
+      finish()
     }
+    this.messageType = ''
   }
 
   subscribe(topic, options) {
@@ -26,8 +32,9 @@ class Consumer {
     }
   }
 
-  onMessage(options, callback) {
-    const cb = (typeof options === 'function')? options : callback
+  onMessage(messageType, callback) {
+    const cb = (typeof messageType === 'function')? messageType : callback
+    this.messageType = (typeof messageType === 'string')? messageType : ''
     this.handle = cb
   }
 }
