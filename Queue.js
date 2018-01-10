@@ -1,6 +1,5 @@
 const redis = require('redis')
 const Topic = require('./Topic')
-const Partition = require('./Partition')
 const Consumer = require('./Consumer')
 
 class Queue {
@@ -56,7 +55,6 @@ class Queue {
 }
 
 Queue.Topic = Topic
-Queue.Partition = Partition
 Queue.Consumer = Consumer
 
 module.exports = Queue

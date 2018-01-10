@@ -14,6 +14,6 @@ for (let i = 0; i < 10000; i++) {
   queue.push({
     topic: 'logTopic',
     type: (i % 100 === 0)? 'show' : '',
-    payload: 'some data for topic 1 - ' + i
+    payload: 'Lorem ipsumdolor sit amet, consectetur adipisicing elit ' + i
   })
 }

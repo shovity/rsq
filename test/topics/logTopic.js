@@ -1,7 +1,8 @@
-const { Topic, Partition, Consumer } = require('../..')
+const { Topic, Consumer } = require('../..')
 const fs = require('fs')
 
 const logTopic = new Topic('logTopic')
+
 const writeFileConsumer = new Consumer()
 const showLogComsumer = new Consumer()
 
