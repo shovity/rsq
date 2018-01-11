@@ -12,26 +12,15 @@ class Consumer {
   }
 
   subscribe(topic, options) {
-    const { partitions = [0] } = options || {}
-
-    if (topic.partitions.length !== 0) {
-      // handles inited
-      partitions.forEach(p => {
-        if (topic.partitions[p]) {
-          topic.partitions[p].subscribers.push(this)
-        }
-      })
-    } else {
-      // handles uninited
-      partitions.forEach(p => {
-        topic.subscribersKeeper.push({
-          subscriber: this,
-          partition: p
-        })
-      })
-    }
+    if (!Array.isArray(topic.subscribers)) throw Error('Param topic must be instance of Topic')
+    topic.subscribers.push(this)
   }
 
+  /**
+   * Regist handle
+   * @param  {string}   messageType if null, '', lost -> apply for all message
+   * @param  {Function} callback    callback(message, finish)
+   */
   onMessage(messageType, callback) {
     const cb = (typeof messageType === 'function')? messageType : callback
     this.messageType = (typeof messageType === 'string')? messageType : ''
