@@ -1,4 +1,9 @@
 class Stream {
+  /**
+   * @param {String} name
+   * @param {String} messageType apply all message type if null
+   * @param {Function} handle    (message, done) => { done() }
+   */
   constructor(name, messageType, handle) {
     this.name = name
     this.messageType = messageType
@@ -31,7 +36,13 @@ class Stream {
 
   done(feedback) {
     // handle feedback
-    //
+
+    //-- test
+    this.redisClient.lrange(this.keyStream, 0, -1, (err, q) => {
+      console.log(this.name + ' queue  : ' + JSON.stringify(q) + '\n-------------------')
+    })
+    //-- end test
+
     setTimeout(() => {
       this.work()
     })

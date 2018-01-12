@@ -82,18 +82,16 @@ class Topic {
    * @param  {Object} message
    */
   push(message) {
-    this.redisClient.get(QUEUE_SERI_NUMBER, (err, reply) => {
+    this.redisClient.incr(QUEUE_SERI_NUMBER, (err, reply) => {
       if (err) throw err
       let seriNumber = 0
       if (reply) seriNumber = +reply
-      // reset seriNumber if it's not safe
-      if (seriNumber >= Number.MAX_SAFE_INTEGER) seriNumber = 0
 
       // gen multi commands
       let commandChain = []
 
-      // incre seriNumber
-      commandChain.push(["incr", QUEUE_SERI_NUMBER])
+      // reset seriNumber if it's not safe
+      if (seriNumber >= Number.MAX_SAFE_INTEGER) commandChain.push(['del', QUEUE_SERI_NUMBER])
 
       // store message
       commandChain.push([
@@ -108,7 +106,7 @@ class Topic {
       this.streams.forEach(stream => {
         if (!stream.messageType || stream.messageType === message.type) {
           commandChain.push([
-            'LPUSH',
+            'RPUSH',
             this.genKeyStream(stream.name),
             seriNumber
           ])

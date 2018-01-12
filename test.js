@@ -12,28 +12,32 @@ const topic = new Topic(
 )
 
 // create stream
-const stream = new Stream(
-  'nameStream',
-  'messageType',
-  (message, done) => {
-  console.log(JSON.stringify(message))
-  done()
-})
-
-// create stream
-const streamLong = new Stream(
-  'longStream',
+const fastStream = new Stream(
+  'fastStream',
   'messageType',
   (message, done) => {
   setTimeout(() => {
-    console.log('longer stream......')
+    console.log('fastStream message: ' + JSON.stringify(message))
+    done()
+  }, 0)
+})
+
+// create stream
+const slowStream = new Stream(
+  'slowStream',
+  'messageType',
+  (message, done) => {
+  setTimeout(() => {
+    console.log('slowStream message: ' + JSON.stringify(message))
     done()
   }, 1000)
 })
 
+// add streams
+topic.addStream(fastStream)
+topic.addStream(slowStream)
 
-topic.addStream(stream)
-topic.addStream(streamLong)
+// add topics
 queue.addTopic(topic)
 
 for (let i = 0; i < 3; i++) {
