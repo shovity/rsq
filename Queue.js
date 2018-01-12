@@ -1,6 +1,6 @@
 const redis = require('redis')
 const Topic = require('./Topic')
-const Consumer = require('./Consumer')
+const Stream = require('./Stream')
 
 class Queue {
   /**
@@ -103,6 +103,6 @@ class Queue {
 }
 
 Queue.Topic = Topic
-Queue.Consumer = Consumer
+Queue.Stream = Stream
 
 module.exports = Queue
