@@ -1,55 +1,26 @@
-const Queue = require('./Queue')
-const Stream = require('./Stream')
-const Topic = require('./Topic')
+const Queue = require('.')
 
 // create queue
 const queue = new Queue()
 
 // create topic
-const topic = new Topic(
-  'nameTopic',
-  { expires: 12 * 60 * 60 }
+queue.newTopic('nameTopic')
+  .newStream('nameStream', 'messageType')
+
+// const topic = queue.getStream('name')
+
+queue.registHandle(
+  [
+    { topic: 'nameTopic', streams: ['nameStream'] }
+  ],
+  (message, done) => {
+    console.log(JSON.stringify(message))
+    done()
+  }
 )
 
-// create stream
-const fastStream = new Stream(
-  'fastStream',
-  'messageType',
-  (message, done) => {
-  setTimeout(() => {
-    console.log('fastStream message: ' + JSON.stringify(message))
-    done()
-  }, 0)
+queue.push({
+  topic: 'nameTopic',
+  type: 'messageType',
+  payload: 'payload '
 })
-
-// create stream
-const slowStream = new Stream(
-  'slowStream',
-  'messageType',
-  (message, done) => {
-  setTimeout(() => {
-    console.log('slowStream message: ' + JSON.stringify(message))
-    done()
-  }, 1000)
-})
-
-// add streams
-topic.addStream(fastStream)
-topic.addStream(slowStream)
-
-// add topics
-queue.addTopic(topic)
-
-for (let i = 0; i < 3; i++) {
-  queue.push({
-    topic: 'nameTopic',
-    type: 'messageType',
-    payload: 'payload ' + i
-  })
-}
-
-//                               |-> stream -> handle (mess type)
-// mess -> |-> topic -> store -> |-> stream -> handle (mess type)
-//         |                     |-> stream -> handle (mess type)
-//         |
-//         | -> topic

@@ -1,12 +1,11 @@
 {
   "name": "queue",
   "version": "1.0.0",
-  "description": "queue",
-  "main": "Queue.js",
+  "description": "a queue",
+  "main": "lib/Queue.js",
   "private": true,
   "scripts": {
     "test": "node test",
-    "dev": "nodemon test",
     "redis": "redis-server"
   },
   "dependencies": {
