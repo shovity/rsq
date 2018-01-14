@@ -4,23 +4,29 @@ const Queue = require('.')
 const queue = new Queue()
 
 // create topic
-queue.newTopic('nameTopic')
-  .newStream('nameStream', 'messageType')
+queue.newTopic('log')
+  .newStream('redis')
+  .newStream('mysql')
 
 // const topic = queue.getStream('name')
 
 queue.registHandle(
   [
-    { topic: 'nameTopic', streams: ['nameStream'] }
+    { topic: 'log', stream: 'mysql', type: 'create' },
+    // { topic: 'log', stream: ['redis', 'mysql'], type: ['create', 'remove'] },
   ],
   (message, done) => {
-    console.log(JSON.stringify(message))
+    console.log('handle ' + JSON.stringify(message))
     done()
   }
 )
 
-queue.push({
-  topic: 'nameTopic',
-  type: 'messageType',
-  payload: 'payload '
-})
+for (let i = 0; i < 2; i++) {
+  queue.push({
+    topic: 'log',
+    stream: 'mysql',
+    // stream: ['mysql', 'redis'],
+    type: 'create',
+    payload: 'payload ' + i
+  })
+}
