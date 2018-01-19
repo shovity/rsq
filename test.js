@@ -14,7 +14,7 @@ queue.registHandle(
     // { topic: 'log', stream: ['redis', 'mysql'], type: ['create', 'remove'] },
   ],
   (message, done) => {
-    console.log('handle ' + JSON.stringify(message))
+    console.log('LOG CREATE: ' + JSON.stringify(message))
     done()
   }
 )
@@ -24,7 +24,7 @@ queue.registHandle(
     { topic: 'log', stream: 'mysql', type: 'remove' },
   ],
   (message, done) => {
-    console.log('handle ' + JSON.stringify(message))
+    console.log('LOG REMOVE: ' + JSON.stringify(message))
     done()
   }
 )
