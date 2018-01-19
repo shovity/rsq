@@ -1,9 +1,8 @@
 {
-  "name": "queue",
-  "version": "1.0.0",
-  "description": "a queue",
+  "name": "mess-queue",
+  "version": "1.0.1",
+  "description": "message queue",
   "main": "lib/Queue.js",
-  "private": true,
   "scripts": {
     "test": "node test",
     "redis": "redis-server"
