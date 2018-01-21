@@ -1,6 +1,6 @@
 {
   "name": "mess-queue",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "message queue",
   "main": "lib/Queue.js",
   "scripts": {
