@@ -1,9 +1,17 @@
 nodejs - redis stream queue
 ===========================
 
+<<<<<<< HEAD
 [![NPM version](https://badge.fury.io/js/rsq.svg)](https://www.npmjs.com/package/rsq)
 ![Downloads](https://img.shields.io/npm/dm/rsq.svg?style=flat)
 [![](https://slackin-socketio.now.sh/badge.svg)](https://slackin-socketio.now.sh)
+=======
+[![NPM Version][npm-image]][npm-url]
+[![NPM Downloads][downloads-image]][downloads-url]
+[![Linux Build][travis-image]][travis-url]
+[![Windows Build][appveyor-image]][appveyor-url]
+[![Test Coverage][coveralls-image]][coveralls-url]
+>>>>>>> 64cd78221d002a7ad5764ca023522472454b1150
 
 Install with:
 
