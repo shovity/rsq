@@ -1,6 +1,6 @@
 {
   "name": "rsq",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Redis stream queue",
   "author": "Huong Nguyen <shovity@gmail.com>",
   "repository": "https://github.com/shovity/rsq",
