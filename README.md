@@ -1,4 +1,4 @@
-### Nodejs - redis stream queue
+## Nodejs - redis stream queue
 
 Stream queue using [redis](https://redis.io/) with driver [node_redis](https://github.com/NodeRedis/node_redis)
 
@@ -58,10 +58,13 @@ for (let i = 0; i < 10; i++) {
 ### APIs
 ```js
 const queue = new Queue([name], [config])
-const topic = queue.newTopic(name, [config]).newStream(name, [config])
+const topic = queue.newTopic(name, [config])
+
+topic.newStream(name, [config])
+queue.registHandle([{ topic, stream, type }], handle)
 ```
 
-### options object properties
+### Options object properties
 | Property | Default | Description |
 |----------|---------|-------------|
 | redisClient | redis client | Client node redis, default create with redisConfig |
