@@ -1,7 +1,7 @@
 {
-  "name": "mess-queue",
-  "version": "1.0.4",
-  "description": "message queue",
+  "name": "rqs",
+  "version": "1.0.5",
+  "description": "redis message queue",
   "main": "lib/Queue.js",
   "license": "MIT",
   "scripts": {
