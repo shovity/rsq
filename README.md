@@ -1,10 +1,11 @@
-nodejs - redis stream queue
-===========================
+# Nodejs - redis stream queue
+
 Stream queue using [redis](https://redis.io/) with driver [node_redis](https://github.com/NodeRedis/node_redis)
+
 [![NPM version](https://badge.fury.io/js/rsq.svg)](https://www.npmjs.com/package/rsq)
 ![Downloads](https://img.shields.io/npm/dm/rsq.svg?style=flat)
 
-## Installation
+# Installation
 ```sh
 # Get the latest stable release of rsq
 $ npm install rsq
