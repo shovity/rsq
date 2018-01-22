@@ -2,8 +2,15 @@
   "name": "rsq",
   "version": "1.0.5",
   "description": "Redis stream queue",
-  "main": "lib/Queue.js",
+  "author": "Huong Nguyen <shovity@gmail.com>",
+  "repository": "https://github.com/shovity/rsq",
+  "keywords": [
+    "queue",
+    "redis",
+    "stream"
+  ],
   "license": "MIT",
+  "main": "lib/Queue.js",
   "scripts": {
     "test": "node test",
     "redis": "redis-server"
