@@ -3,11 +3,14 @@ nodejs - redis stream queue
 
 [![NPM version](https://badge.fury.io/js/rsq.svg)](https://www.npmjs.com/package/rsq)
 ![Downloads](https://img.shields.io/npm/dm/rsq.svg?style=flat)
-[![](https://slackin-socketio.now.sh/badge.svg)](https://slackin-socketio.now.sh)
 
-Install with:
-
-  npm install rsq
+## Installation
+```sh
+# Get the latest stable release of rsq
+$ npm install rsq
+or
+$ yarn install rsq
+```
 
 ## Usage Example
 
