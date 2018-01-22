@@ -1,17 +1,15 @@
 const Queue = require('.')
-
 const queue = new Queue()
 
-queue.newTopic('log').newStream('mysql')
+// streams working concurently
+queue.newTopic('log').newStream('mysql').newStream('otherStream')
 
 queue.registHandle(
   [
     { topic: 'log', stream: 'mysql', type: 'create' },
+    // { topic: 'log', stream: ['mysql', 'outherStream'], type: ['create', 'otherType'] },
   ],
   (message, done) => {
-    const { payload, timestamp } = message
-    const { something } = payload
-
     console.log('LOG CREATE: ' + JSON.stringify(message))
     done()
   }
