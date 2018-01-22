@@ -1,6 +1,6 @@
 nodejs - redis stream queue
 ===========================
-
+Stream queue using [redis](https://redis.io/) with driver [node_redis](https://github.com/NodeRedis/node_redis)
 [![NPM version](https://badge.fury.io/js/rsq.svg)](https://www.npmjs.com/package/rsq)
 ![Downloads](https://img.shields.io/npm/dm/rsq.svg?style=flat)
 
@@ -8,7 +8,7 @@ nodejs - redis stream queue
 ```sh
 # Get the latest stable release of rsq
 $ npm install rsq
-or
+  or
 $ yarn install rsq
 ```
 
@@ -51,3 +51,17 @@ setInterval(() => {
   })
 }, 100)
 ```
+
+## APIs
+```js
+const queue = new Queue([name], [config])
+const topic = queue.newTopic(name, [config]).newStream(name, [config])
+```
+
+## `options` object properties
+| Property      | Default   | Description                                        |
+|---------------|-----------|----------------------------------------------------|
+| redisClient   | Object    | Client node redis, default create with redisConfig |
+| redisConfig   | null      | Default options redis client                       |
+| priority      | 0         |                                                    |
+| expires       | 2 day     | Secends                                            |
