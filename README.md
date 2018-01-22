@@ -1,11 +1,11 @@
-# Nodejs - redis stream queue
+### Nodejs - redis stream queue
 
 Stream queue using [redis](https://redis.io/) with driver [node_redis](https://github.com/NodeRedis/node_redis)
 
 [![NPM version](https://badge.fury.io/js/rsq.svg)](https://www.npmjs.com/package/rsq)
 ![Downloads](https://img.shields.io/npm/dm/rsq.svg?style=flat)
 
-# Installation
+### Installation
 ```sh
 # Get the latest stable release of rsq
 $ npm install rsq
@@ -13,7 +13,7 @@ $ npm install rsq
 $ yarn install rsq
 ```
 
-## Usage Example
+### Usage Example
 
 ```js
 const Queue = require('rsq')
@@ -28,8 +28,10 @@ queue.registHandle(
     // { topic: 'log', stream: ['mysql', 'outherStream'], type: ['create', 'otherType'] },
   ],
   (message, done) => {
-    console.log('LOG CREATE: ' + JSON.stringify(message))
-    done()
+    setTimeout(() => {
+      console.log('LOG CREATE: ' + JSON.stringify(message))
+      done()
+    }, 200)
   }
 )
 
@@ -43,26 +45,28 @@ queue.registHandle(
   }
 )
 
-setInterval(() => {
+for (let i = 0; i < 10; i++) {
   queue.push({
     topic: 'log',
     stream: 'mysql',
     type: (Math.random() < 0.5)? 'create' : 'remove',
-    payload: { something: 'data' }
+    payload: { data: 'something' + i }
   })
-}, 100)
+}
 ```
 
-## APIs
+### APIs
 ```js
 const queue = new Queue([name], [config])
 const topic = queue.newTopic(name, [config]).newStream(name, [config])
 ```
 
-## `options` object properties
-| Property      | Default   | Description                                        |
-|---------------|-----------|----------------------------------------------------|
-| redisClient   | Object    | Client node redis, default create with redisConfig |
-| redisConfig   | null      | Default options redis client                       |
-| priority      | 0         |                                                    |
-| expires       | 2 day     | Secends                                            |
+### options object properties
+| Property | Default | Description |
+|----------|---------|-------------|
+| redisClient | redis client | Client node redis, default create with redisConfig |
+| redisConfig | null | Default options redis client |
+| priority | 0 | 0-timeout, 1-imediate, 2-nextTick |
+| expires | 2 day | Expires key redis (secends) |
+
+see redisConfig [node_redis](https://github.com/NodeRedis/node_redis)
