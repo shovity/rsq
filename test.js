@@ -31,5 +31,7 @@ setInterval(() => {
     stream: 'mysql',
     type: (Math.random() < 0.5)? 'create' : 'remove',
     payload: { something: 'data' }
+  }, (err) => {
+    if (err) throw err
   })
 }, 100)
