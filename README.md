@@ -62,6 +62,7 @@ const topic = queue.newTopic(name, [config])
 
 topic.newStream(name, [config])
 queue.registHandle([{ topic, stream, type }], handle)
+queue.push(message, callback)
 ```
 
 ### Options object properties
