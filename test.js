@@ -2,7 +2,7 @@ const Queue = require('.')
 const queue = new Queue()
 
 // streams working concurently
-queue.newTopic('log').newStream('mysql').newStream('otherStream')
+const topic = queue.newTopic('log').newStream('mysql').newStream('otherStream')
 
 queue.registHandle(
   [
@@ -25,6 +25,10 @@ queue.registHandle(
   }
 )
 
+queue.on('error', (err, message) => {
+  throw err
+})
+
 setInterval(() => {
   queue.push({
     topic: 'log',
@@ -35,3 +39,5 @@ setInterval(() => {
     if (err) throw err
   })
 }, 100)
+
+

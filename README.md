@@ -22,6 +22,8 @@ const queue = new Queue()
 // streams working concurently
 queue.newTopic('log').newStream('mysql').newStream('otherStream')
 
+
+// regist handle
 queue.registHandle(
   [
     { topic: 'log', stream: 'mysql', type: 'create' },
@@ -45,12 +47,20 @@ queue.registHandle(
   }
 )
 
+// listen error
+queue.on('error', (err, message) => {
+  throw err
+})
+
+// push message
 for (let i = 0; i < 10; i++) {
   queue.push({
     topic: 'log',
     stream: 'mysql',
     type: (Math.random() < 0.5)? 'create' : 'remove',
     payload: { data: 'something' + i }
+  }, (err) => {
+    if (err) throw err
   })
 }
 ```
@@ -63,6 +73,8 @@ const topic = queue.newTopic(name, [config])
 topic.newStream(name, [config])
 queue.registHandle([{ topic, stream, type }], handle)
 queue.push(message, callback)
+object.on(event, handle)
+object.emit(event, data)
 ```
 
 ### Options object properties
